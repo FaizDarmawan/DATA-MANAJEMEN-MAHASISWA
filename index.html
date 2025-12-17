@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Data Mahasiswa</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- HEADER -->
+      <header>
+        <h1>Sistem Manajemen Data Mahasiswa</h1>
+        <p class="subtitle">Fakultas Ilmu Komputer – Universitas Pamulang</p>
+      </header>
+
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
+        <!-- FORM -->
+        <section class="card form-section">
+          <h2>Formulir Data Mahasiswa</h2>
+
+          <form id="formMahasiswa">
+            <input type="hidden" id="editIndex" value="-1" />
+
+            <div class="form-group">
+              <label for="nim">NIM</label>
+              <input type="text" id="nim" placeholder="Contoh: 230101001" />
+              <small class="hint">9–12 digit angka</small>
+            </div>
+
+            <div class="form-group">
+              <label for="nama">Nama Lengkap</label>
+              <input type="text" id="nama" placeholder="Masukkan Nama" />
+            </div>
+
+            <div class="form-group">
+              <label for="jurusan">Jurusan</label>
+              <input
+                type="text"
+                id="jurusan"
+                placeholder="Teknik Informatika"
+              />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">Simpan Data</button>
+              <button type="button" id="btnReset" class="btn-secondary">
+                Reset Form
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- DATA -->
+        <section class="card data-section">
+          <div class="section-header">
+            <h2>Daftar Mahasiswa</h2>
+
+            <div class="controls">
+              <button id="btnSortMerge" class="btn-action">
+                Urutkan (Merge Sort)
+              </button>
+              <button id="btnSortBubble" class="btn-action">
+                Urutkan (Bubble Sort)
+              </button>
+
+              <div class="search-group">
+                <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Cari NIM / Nama"
+                />
+                <button id="btnSearchLinear" class="btn-search">Linear</button>
+                <button id="btnSearchBinary" class="btn-search">Binary</button>
+              </div>
+
+              <div class="io-group">
+                <button id="btnExport" class="btn-outline">Export JSON</button>
+                <label class="btn-outline file-label">
+                  Import JSON
+                  <input type="file" id="importFile" accept=".json" hidden />
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table id="dataMahasiswa">
+              <thead>
+                <tr>
+                  <th>NIM</th>
+                  <th>Nama</th>
+                  <th>Jurusan</th>
+                  <th class="actions">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+
+      <!-- NOTIFICATION -->
+      <div id="message" class="notification"></div>
+
+      <!-- FOOTER -->
+      <footer>
+        <p>© 2025 Sistem Akademik – Universitas Pamulang</p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
