@@ -167,28 +167,36 @@ class ManajemenMahasiswa {
     URL.revokeObjectURL(url);
   }
 
-  imporDariFile(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const imported = JSON.parse(e.target.result);
-          if (!Array.isArray(imported)) throw new Error("Format tidak valid.");
-          // Validasi setiap entri
-          imported.forEach((m) => {
-            Mahasiswa.validate(m.nim, m.nama, m.jurusan);
-          });
-          this.data = imported;
-          this.saveData();
-          resolve();
-        } catch (err) {
-          reject(err);
-        }
-      };
-      reader.onerror = () => reject(new Error("Gagal membaca file."));
-      reader.readAsText(file);
-    });
-  }
+ imporDariFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      try {
+        const imported = JSON.parse(e.target.result);
+        if (!Array.isArray(imported))
+          throw new Error("Format file harus berupa array.");
+
+        const validated = imported.map(m => {
+          Mahasiswa.validate(m.nim, m.nama, m.jurusan);
+          return new Mahasiswa(m.nim, m.nama, m.jurusan);
+        });
+
+        this.data = validated;
+        this.saveData();
+        resolve();
+      } catch (err) {
+        reject(err);
+      }
+    };
+
+    reader.onerror = () =>
+      reject(new Error("Gagal membaca file."));
+
+    reader.readAsText(file);
+  });
+}
+
 
   renderTable(data = this.data) {
     const tbody = document.getElementById("tableBody");
@@ -348,3 +356,4 @@ document.getElementById("btnImport").addEventListener("click", async () => {
 // - Komentar menjelaskan kompleksitas & logika
 // - Error handling menyeluruh
 // - Tidak ada global variable berlebihan
+
